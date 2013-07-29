@@ -1,0 +1,45 @@
+<script type="text/x-tmpl" id="tmpl_contacts_add_edit">
+<div class="title"><%= action %> contact</div>
+<form data-id="<% if (_.isNull(id) === false) { %><%= id %><% } %>">
+	<fieldset>
+		<legend>full name</legend>
+		<input id="givenName" type="text" placeholder="first name" spellcheck="false" value="<% if (_.isObject(name)) { %><%= name.givenName %><% } %>">
+		<input id="familyName" type="text" placeholder="last name" spellcheck="false" value="<% if (_.isObject(name)) { %><%= name.familyName %><% } %>">
+	</fieldset>
+	<fieldset>
+		<legend>emails</legend>
+		<% _.each(['home','work','other'], function(item,key) { %>
+		<span>
+			<input data-id="<% if (_.isObject(emails[key])) { %><%= emails[key].id %><% } %>" type="email" placeholder="email <%= (key+1) %>" value="<% if (_.isObject(emails[key])) { %><%= emails[key].value %><% } %>">
+			<select data-id="<% if (_.isObject(emails[key])) { %><%= emails[key].id %><% } %>">
+				<option value="home" <% if ((_.isObject(emails[key]) && emails[key].type == item) || (item != 'work' && item != 'other')) { %>selected="selected"<% } %>>home</option>
+				<option value="work" <% if ((_.isObject(emails[key]) && emails[key].type == item) || (item != 'home' && item != 'other')) { %>selected="selected"<% } %>>work</option>
+				<option value="other" <% if ((_.isObject(emails[key]) && emails[key].type == item) || (item != 'home' && item != 'work')) { %>selected="selected"<% } %>>other</option>
+			</select>
+		</span>
+		<% }); %>
+	</fieldset>
+	<fieldset>
+		<legend>phones</legend>
+		<% _.each(['mobile','home','work','other'], function(item,key) { %>
+		<span>
+			<input data-id="<% if (_.isObject(phoneNumbers[key])) { %><%= phoneNumbers[key].id %><% } %>" type="tel" placeholder="phone <%= (key+1) %>" value="<% if (_.isObject(phoneNumbers[key])) { %><%= phoneNumbers[key].value %><% } %>">
+			<select data-id="<% if (_.isObject(phoneNumbers[key])) { %><%= phoneNumbers[key].id %><% } %>">
+				<option value="mobile" <% if (_.isObject(phoneNumbers[key]) && phoneNumbers[key].type == 'mobile') { %>selected="selected"<% } %>>mobile</option>
+				<option value="home" <% if (_.isObject(phoneNumbers[key]) && phoneNumbers[key].type == 'home') { %>selected="selected"<% } %>>home</option>
+				<option value="work" <% if (_.isObject(phoneNumbers[key]) && phoneNumbers[key].type == 'work') { %>selected="selected"<% } %>>work</option>
+				<option value="other" <% if (_.isObject(phoneNumbers[key]) && phoneNumbers[key].type == 'other') { %>selected="selected"<% } %>>other</option>
+			</select>
+		</span>
+		<% }); %>
+	</fieldset>
+	<fieldset>
+		<legend>note</legend>
+		<textarea id="note" spellcheck="false"><%= note %></textarea>
+	</fieldset>
+	<div class="buttons">
+		<input class="negative" type="button" value="<%= label %>" />
+		<input class="positive" type="button" value="save" />
+	</div>
+</form>
+</script>

@@ -1,0 +1,22 @@
+
+/*
+ * Import all the SASS files in order
+ */
+
+@import '_dpi.scss';
+/* git.io/normalize */
+@import '_normalize.scss';
+/* html5boilerplate.com */
+@import '_main.scss';
+@import '_mixins.scss';
+@import '_fonts.scss';
+@import '_reset.scss';
+@import '_animations.scss';
+@import '_view.scss';
+@import '_header.scss';
+@import '_footer.scss';
+@import '_scroller.scss';
+@import '_contacts.scss';
+@import '_about.scss';
+/* custom CSS */
+@import '_media_queries.scss';

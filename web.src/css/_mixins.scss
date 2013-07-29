@@ -1,0 +1,17 @@
+
+/*
+ * Mixins related CSS (_mixins.scss)
+ */
+
+$font_family: "HeydingsCommonIconsRegular";
+$font_path: "/karura/fonts/";
+
+@mixin shadow {
+	text-shadow: 0 -0.075em 0 rgba(0, 0, 0, 0.75);
+}
+
+@mixin ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

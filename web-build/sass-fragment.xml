@@ -1,0 +1,83 @@
+<project name="sass-fragment">
+
+    <!--
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+    -->
+    
+    	<!-- SASS Specific targets -->
+	<property file="web.properties"/>
+	<property file="build.mode.properties"/>
+	
+	<import file="ant-contrib-fragment.xml"/>
+	
+	
+	<!-- download SASS tool -->
+	
+	<target name="setup-sass">
+		<exec executable="sass" failifexecutionfails="false" failonerror="false" errorproperty="sass.not.installed" />
+        <antcall target="sass-download-install"/>
+	</target>
+    
+	<target name="sass-download-install" unless="sass.not.installed">
+				<echo>
+SASS not installed. Starting installation. If this fails, you can manually
+install SASS using the following command
+----------
+sudo gem install sass
+----------
+                </echo>
+                <exec executable="sudo">
+                    <arg line="gem install sass"/>
+                </exec>
+    </target>
+
+    <target name="preprocess-sass-file">
+   
+        <local name="css.config" />
+		<basename file="${css.config.dir}" property="css.config" />
+		
+		<echo message="------------------------"/>
+		<echo message="Processing ${css.config.dir}"/>
+		<echo message="------------------------"/>
+		
+		<exec executable="sass">
+		 	<arg value="-I${css.src.dir}/${css.config}" />
+		  	<arg value="${css.src.dir}/import.scss" />
+		   	<arg value="${css.tmp.out.dir}/${css.config}.css" />
+		</exec>
+    </target>
+
+	<target name="sass-to-css" description="SASS - Converting SCSS files to CSS">
+		<mkdir dir="${css.tmp.out.dir}"/>
+		<!--
+			iterate through the css source folder and create a css file corresponding to each configuration
+			Please note that the configurations have to be a valid Android resource configuration.
+			ldpi, hdpi, mdpi, ...
+        -->
+
+		<foreach target="preprocess-sass-file" param="css.config.dir">
+			<path>
+				<dirset dir="${css.src.dir}">
+					<include name="*" />
+					<exclude name=".sass-cache"/>
+				</dirset>
+			</path>
+		</foreach>
+	</target>
+</project>

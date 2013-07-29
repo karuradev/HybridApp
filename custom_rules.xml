@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+ -->
+<project name="hybrid-note-custom-rules">
+	<target name="trigger-pre-build" depends="-pre-build"/>
+	<target name="trigger-post-build" depends="-post-build"/>
+
+	<target name="generate.build.mode" unless="eclipse.build">
+	    <!-- let the web build scripts know about the build mode.
+		we have to do this way, because we dont want the classpath of android
+		pollute the runtime of various tools we are interested in using
+		-->
+
+	    <script language="beanshell">
+	         <classpath>
+                 <fileset dir="${basedir}/web-build/ant" includes="*.jar" />
+        	</classpath>
+		   	 <![CDATA[
+			 	String isRelease = project.getProperty("build.is.mode.release");
+			 	StringBuffer sb = new StringBuffer();
+			 	if (isRelease != null && isRelease.trim().length() > 0){
+			 	   	sb.append("build.is.mode.release=true");
+			 	  }else {
+			 		sb.append("build.is.mode.debug=true");
+			 	  }
+			 	  project.setProperty("build.mode", sb.toString());
+			 ]]>
+	 	</script>
+
+	    <echo file="${basedir}/web-build/build.mode.properties">
+${build.mode}
+android.library.reference.1=${android.library.reference.1}
+        </echo>
+	</target>
+
+	<target name="-pre-compile" depends="generate.build.mode">
+		<ant antfile="${android.library.reference.1}/build.xml" inheritAll="false" target="generate-karura" useNativeBasedir="true"/>
+		<!-- download the tools and run them on the code -->
+		<ant antfile="web-build/build.xml" inheritAll="false" target="setup" useNativeBasedir="true"/>
+        <ant antfile="web-build/build.xml" target="run-tools" inheritAll="false" useNativeBasedir="true"/>
+   </target>
+
+	<target name="-post-build">
+		<ant antfile="web-build/build.xml" target="post-build-cleanup"  inheritAll="false" useNativeBasedir="true"/>
+	</target>
+
+    <target name="-pre-clean">
+        <delete >
+            <fileset dir="assets/karura" includes="**/*.*"/>
+        </delete>
+    </target>
+
+</project>

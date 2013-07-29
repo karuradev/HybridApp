@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+-->
+<project name="web_rules">
+	<!-- this file contains all parameters for this build file -->
+
+	<loadproperties srcFile="web.properties" />
+
+    <!-- Install all the tools necessary -->
+
+	<target name="setup">
+
+		<ant antfile="sass-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="setup-sass"/>
+		<ant antfile="css-lint-fragment.xml"  useNativeBasedir="true" inheritAll="false"  target="setup-css-lint" />
+		<ant antfile="js-lint-fragment.xml"  useNativeBasedir="true" inheritAll="false"  target="setup-js-lint" />
+		<ant antfile="yui-fragment.xml" useNativeBasedir="true" inheritAll="false"  target="setup-yui-compressor" />
+	</target>
+
+    <target name="run-tools">
+ 		<!-- run the tools -->
+		
+		<ant antfile="sass-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="sass-to-css" />
+<!-- 
+		<ant antfile="css-lint-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="run-css-lint" />
+		<ant antfile="js-lint-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="run-js-lint" />
+	 -->
+		<ant antfile="merge-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="combine-css" />
+		<ant antfile="merge-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="combine-js" />
+		<ant antfile="yui-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="compress-css-js" />
+
+		<ant antfile="javascript-dependency-fragment.xml" useNativeBasedir="true" inheritAll="false" target="process-dependencies"/>
+		
+		<copy file="${web.src.dir}/index.html" tofile="${web.tmp.dir}/index.html"/>
+		<ant antfile="merge-fragment.xml"  useNativeBasedir="true" inheritAll="false" target="merge-templates" />
+
+    </target>
+
+	<!-- deletes the temporary directory and all its contents -->
+
+	<target name="post-build-cleanup">
+		<delete dir="${web.tmp.dir}" />
+	</target>
+
+
+	<target name="-pre-clean">
+		<!-- delete js/css related output files -->
+		<delete dir="${css.out.dir}" />
+		<delete dir="${js.out.dir}" />
+
+		<delete>
+			<fileset dir="${web.out.dir}" includes="*.html" />
+		</delete>
+
+		<delete dir="${web.tmp.dir}" />
+	</target>
+
+</project>

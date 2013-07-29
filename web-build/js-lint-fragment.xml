@@ -1,0 +1,68 @@
+<project name="js-lint-fragment">
+<!--
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+-->	
+	<property file="web.properties"/>
+	<property file="build.mode.properties"/>
+	
+	<!-- JSLint - Syntax-checks JavaScript files -->
+	<property name="js.lint.dir" location="${web.tools.dir}/jslint" />
+	<property name="jslint.version" value="2.0.5" />
+	<property name="js.lint.jar" value="jslint4java-${jslint.version}.jar" />
+	<property name="js.lint.zip" value="jslint4java-${jslint.version}.zip" />
+		
+	<import file="net-fragment.xml"/>
+	
+	<property file="js.lint.properties"/>
+	
+	<target name="setup-js-lint">
+		<mkdir dir="${js.lint.dir}" />
+		
+		<download-if-needed url-to-download="https://jslint4java.googlecode.com/files/jslint4java-${jslint.version}-dist.zip"
+		                    local-file-name="${js.lint.zip}"
+		                    local-download-dir="${js.lint.dir}" />	
+							
+		<unzip src="${js.lint.dir}/${js.lint.zip}"	dest="${js.lint.dir}/">
+			<patternset>
+				<include name="**/*.jar" />
+			</patternset>
+
+			<mapper type="flatten" />
+		</unzip>	
+	</target>
+
+	<target name="run-js-lint" description="JSLint - Syntax-checks JavaScript files">
+		
+		<foreach target="run-lint-exec" param="jsFile">
+			<path>
+		   		 <fileset dir="${js.src.dir}" excludes="vendor/**/*.js" includes="**/*.js" />
+			</path>
+		</foreach>
+
+	</target>
+	
+	<target name="run-lint-exec">
+		<java jar="${js.lint.dir}/${js.lint.jar}" fork="true">
+			<!-- for js lint directives applied to this compilation please see 
+			js.lint.properties file
+			-->
+			<arg line="${js.lint.directives} ${jsFile}"/>
+		</java>
+	</target>
+</project>

@@ -1,0 +1,208 @@
+<project name="yui-fragment" >
+
+    <!--
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+    -->
+
+    <property file="web.properties" />
+
+    <property file="build.mode.properties" />
+    <!-- YUI Compressor specific targets -->
+
+    <property
+        name="yui.dir"
+        location="${web.tools.dir}/yuicompressor" />
+
+    <property
+        name="yui.version"
+        value="2.4.2" />
+
+    <property
+        name="yui.ant.version"
+        value="0.5" />
+
+    <property
+        name="yui.compressor.zip"
+        value="yui-compressor-ant-task-${yui.ant.version}.zip" />
+
+    <import file="net-fragment.xml" />
+
+    <target name="setup-yui-compressor" >
+
+        <mkdir dir="${yui.dir}" />
+
+        <download-if-needed
+            local-download-dir="${yui.dir}"
+            local-file-name="${yui.compressor.zip}"
+            url-to-download="http://javaflight-code.googlecode.com/files/yui-compressor-ant-task-${yui.ant.version}.zip" />
+
+        <unzip
+            dest="${yui.dir}"
+            overwrite="false"
+            src="${yui.dir}/${yui.compressor.zip}" >
+
+            <patternset>
+
+                <include name="bin/*.jar" />
+
+                <include name="lib/*.jar" />
+            </patternset>
+
+            <mapper type="flatten" />
+        </unzip>
+    </target>
+
+    <target name="define-yui-task" >
+
+        <property
+            name="yui.compressor.jar"
+            value="${yui.dir}/yuicompressor-${yui.version}.jar" />
+
+        <property
+            name="yui.compressor.ant.task.jar"
+            value="${yui.dir}/yui-compressor-ant-task-${yui.ant.version}.jar" />
+
+        <property
+            name="yui.compressor.ant.jar"
+            value="${yui.dir}/ant.jar" />
+
+        <property
+            name="yui.compressor.jargs.jar"
+            value="${yui.dir}/jargs-1.0.jar" />
+
+        <property
+            name="yui.compressor.rhino.jar"
+            value="${yui.dir}/rhino-1.6R7.jar" />
+
+        <path id="yui.classpath" >
+            <pathelement location="${yui.compressor.jar}" />
+            <pathelement location="${yui.compressor.ant.task.jar}" />
+            <pathelement location="${yui.compressor.ant.jar}/" />
+            <pathelement location="${yui.compressor.jargs.jar}/" />
+            <pathelement location="${yui.compressor.rhino.jar}/" />
+        </path>
+
+        <taskdef
+            name="yui-compressor"
+            classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask" >
+
+            <classpath refid="yui.classpath" />
+        </taskdef>
+    </target>
+
+    <target name="compress-css-js" >
+
+        <antcall target="compress-js" />
+
+        <antcall target="compress-css" />
+    </target>
+
+    <!-- targets src/javascripts -->
+
+    <target
+        name="compress-css-debug"
+        depends="define-yui-task"
+        if="build.is.mode.debug" >
+
+        <copy
+            overwrite="true"
+            todir="${css.out.dir}" >
+
+            <fileset dir="${css.tmp.out.dir}" >
+
+                <include name="**/*.css" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target
+        name="compress-css"
+        depends="compress-css-debug"
+        unless="build.is.mode.debug" >
+
+        <mkdir dir="${css.tmp.out.dir}" />
+        <!-- compresses each CSS file -->
+        <!-- and saved as {original_name}-min.{extension} -->
+
+        <yui-compressor
+            fromdir="${css.tmp.out.dir}"
+            munge="true"
+            preserveallsemicolons="false"
+            todir="${css.out.dir}"
+            warn="false" >
+
+            <include name="${web.css.file}" />
+        </yui-compressor>
+    </target>
+
+    <target
+        name="compress-js-debug"
+        depends="define-yui-task" >
+
+        <!-- if="build.mode.debug" -->
+
+        <copy
+            overwrite="true"
+            todir="${js.out.dir}" >
+
+            <fileset dir="${js.tmp.out.dir}" >
+
+                <include name="**/*.js" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target
+        name="compress-js"
+        depends="compress-js-debug" >
+
+        <!--
+			 TODO build a framework which can merge javascripts based on their
+			 dependency chain. Most likely we will customize the AMD to run as 
+			 compile time and then do the needful.
+			 
+			 
+		unless="build.mode.debug"> 
+        -->
+        <!-- compresses each JavaScript and CSS file -->
+        <!-- and saved as {original_name}-min.{extension} -->
+        <!--
+		<mkdir dir="${js.tmp.out.dir}" />
+		
+		<yui-compressor fromdir="${js.tmp.out.dir}"
+		                munge="true"
+		                preserveallsemicolons="false"
+		                todir="${js.out.dir}"
+		                warn="false" >
+			<include name="${web.js.file}"/>
+		</yui-compressor>
+        -->
+        <!-- concatenates all compressed JS files into one -->
+        <!--
+		<move todir="${build.dir}">
+			<fileset dir="${build.dir}">
+				<include name="**/*.js" />
+			</fileset>
+
+			<mapper from="*-min.js" to="*.js" type="glob" />
+		</move>
+        -->
+    </target>
+
+</project>

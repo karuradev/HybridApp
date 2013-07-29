@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+
+<!--
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+-->
+
+<project name="template-fragment" >
+
+    <property file="web.properties" />
+
+    <property file="build.mode.properties" />
+
+    <!-- Templates - Process HTML templates files -->
+
+    <target
+        name="merge-templates-debug"
+        if="build.is.mode.debug" >
+
+        <copy
+            file="${web.tmp.dir}/index.html"
+            overwrite="true"
+            tofile="${web.tmp.dir}/index1.html" >
+
+            <filterset>
+
+                <filter
+                    token="css"
+                    value="
+		&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (-webkit-min-device-pixel-ratio: 0.75)&quot; href=&quot;css/ldpi.css&quot; />
+		&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (-webkit-min-device-pixel-ratio: 1.0)&quot; href=&quot;css/mdpi.css&quot; />
+		&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (-webkit-min-device-pixel-ratio: 1.5)&quot; href=&quot;css/hdpi.css&quot; />
+		&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (-webkit-min-device-pixel-ratio: 2.0)&quot; href=&quot;css/xhdpi.css&quot; />
+
+		" />
+            </filterset>
+        </copy>
+
+        <move
+            file="${web.tmp.dir}/index1.html"
+            tofile="${web.tmp.dir}/index.html" />
+    </target>
+
+    <target
+        name="merge-templates"
+        depends="merge-templates-debug"
+        description="Templates - Process HTML templates files" >
+
+        <concat destfile="${web.tmp.dir}/templates.html" >
+
+            <fileset
+                dir="${web.src.dir}/templates"
+                includes="**/*.tmpl" />
+        </concat>
+
+        <loadfile
+            property="merged-templates"
+            srcFile="${web.tmp.dir}/templates.html" />
+
+        <copy
+            file="${web.tmp.dir}/index.html"
+            overwrite="true"
+            todir="${web.out.dir}" >
+
+            <filterset>
+
+                <filter
+                    token="templates"
+                    value="${merged-templates}" />
+            </filterset>
+        </copy>
+
+        <copy
+            overwrite="true"
+            todir="${web.out.dir}" >
+
+            <fileset dir="${web.src.dir}" >
+
+                <include name="**/*.*" />
+
+                <exclude name="js/**/*.*" />
+
+                <exclude name="**/*.html" />
+
+                <exclude name="css/**/*.*" />
+
+                <exclude name="templates/**/*.*" />
+            </fileset>
+        </copy>
+
+        <copy
+            overwrite="true"
+            todir="${web.out.dir}" >
+
+            <fileset dir="../${android.library.reference.1}/assets/karura" >
+
+                <include name="**/*.*" />
+            </fileset>
+        </copy>
+    </target>
+
+    <filelist
+        id="js_file_order"
+        dir="${js.src.dir}" >
+
+        <file name="vendors/iscroll/iscroll.js" />
+    </filelist>
+
+    <target name="setup-tmp-js-output-dir" >
+
+        <mkdir dir="${web.tmp.dir}" />
+
+        <mkdir dir="${js.tmp.out.dir}" />
+    </target>
+
+    <target
+        name="combine-js-debug"
+        depends="setup-tmp-js-output-dir"
+        if="build.is.mode.debug" >
+
+        <mkdir dir="${web.tmp.dir}" />
+
+        <copy todir="${js.tmp.out.dir}" >
+
+            <fileset dir="${js.src.dir}" >
+
+                <include name="**/*.js" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target
+        name="combine-js"
+        depends="combine-js-debug"
+        unless="build.is.mode.debug" >
+
+        <mkdir dir="${web.tmp.dir}" />
+        <!-- concatenates all JS files into one -->
+
+        <concat
+            destfile="${js.tmp.out.dir}/${web.js.file}"
+            fixlastline="true"
+            force="true" >
+
+            <fileset dir="${js.src.dir}/vendors" >
+
+                <include name="**/*.js" />
+            </fileset>
+
+            <filelist refid="js_file_order" />
+
+            <fileset dir="${js.src.dir}" >
+
+                <include name="**/*.js" />
+
+                <exclude name="vendors/**/*.js" />
+            </fileset>
+        </concat>
+    </target>
+
+    <target name="setup-tmp-css-output-dir" >
+
+        <mkdir dir="${web.tmp.dir}" />
+
+        <mkdir dir="${css.tmp.out.dir}" />
+    </target>
+
+    <target
+        name="combine-css-debug"
+        depends="setup-tmp-css-output-dir"
+        if="build.is.mode.debug" >
+
+        <delete file="${css.tmp.out.dir}/${web.css.file}" />
+
+        <copy
+            overwrite="true"
+            todir="${css.tmp.out.dir}" >
+
+            <fileset dir="${css.src.dir}" >
+
+                <include name="**/*.css" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target
+        name="combine-css"
+        depends="combine-css-debug"
+        unless="build.is.mode.debug" >
+
+        <delete file="${css.tmp.out.dir}/${web.css.file}" />
+
+        <concat
+            destfile="${css.tmp.out.dir}/${web.css.file}"
+            fixlastline="true"
+            force="true" >
+
+            <fileset dir="${css.src.dir}" >
+
+                <include name="**/*.css" />
+            </fileset>
+
+            <fileset dir="${css.tmp.out.dir}" >
+
+                <include name="**/*.css" />
+            </fileset>
+        </concat>
+    </target>
+
+</project>

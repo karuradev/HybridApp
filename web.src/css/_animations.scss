@@ -1,0 +1,13 @@
+
+/***** NOT IN USE *****
+ * Animation related CSS (_animation.scss)
+ */
+
+@-webkit-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(-180deg);
+	}
+	100% {
+		-webkit-transform: rotate(180deg);
+	}
+}

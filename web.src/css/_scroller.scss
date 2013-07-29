@@ -1,0 +1,29 @@
+
+/*
+ * Scroller related CSS (_scroller.scss)
+ */
+
+section {
+    .wrapper {
+        position: absolute;
+        display: -webkit-box;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        .scroller {
+            position: absolute;
+            width: 100%;
+            background-color: #DEEBFF;
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                text-align: left;
+                li {
+                    margin: 0.5em;
+                }
+            }
+        }
+    }
+}

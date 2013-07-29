@@ -1,0 +1,31 @@
+<script type="text/x-tmpl" id="tmpl_contacts_detail">
+<div class="contact detail">
+	<div class="edit">Edit</div>
+    <div class="profile">
+        <img data-id="<%= id %>" class="avatar" src="<%= avatar %>" />
+        <div class="full_name"><%= name.givenName %> <%= name.familyName %></div>
+    </div>
+    <% if (emails.length > 0) { %>
+    <div class="details">
+        <div class="caption emails">Emails</div>
+        <% _.each(emails, function(email) { %> 
+		<div class="comm"><span><%= email.type %></span> : <a href="mailto:<%= email.value %>"><%= email.value %></a></div>
+		<% }); %>
+    </div>
+    <% } %>
+    <% if (phoneNumbers.length > 0) { %>
+    <div class="details">
+        <div class="caption phones">Phones</div>
+		<% _.each(phoneNumbers, function(phone) { %>
+		<div class="comm"><span><%= phone.type %></span> : <a href="tel:<%= phone.value %>"><%= phone.value %></a></div>
+		<% }); %>
+    </div>
+    <% } %>
+    <% if (note != '') { %>
+    <div class="details">
+        <div class="caption notes">Notes</div>
+        <div class="note"><%= note %></div>
+    </div>
+    <% } %>
+</div>
+</script>

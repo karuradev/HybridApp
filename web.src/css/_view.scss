@@ -1,0 +1,79 @@
+
+/*
+ * View related CSS (_view.scss)
+ */
+
+article {
+    display: -webkit-box;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    -webkit-box-orient: vertical;
+}
+
+section {
+    position: relative;
+    display: -webkit-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-box-flex: 1;
+    -webkit-box-orient: vertical;
+    &.loading {
+        color: #ffffff;
+        font-size: 1.5em;
+        -webkit-box-orient: vertical;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+    }
+    &.empty {
+        -webkit-box-orient: vertical;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        .icon {
+            color: #ffffff;
+            font-size: 1em;
+            position: relative;
+            &.profile {
+                &:before, &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    background-color: #ffffff;
+                }
+                &:before {
+                    left: -25px;
+                    width: 16px;
+                    height: 5px;
+                    margin-top: 1px;
+                    -webkit-border-top-right-radius: 5px;
+                    -webkit-border-top-left-radius: 5px;
+                    border-radius: 5px 5px 0 0;
+                }
+                &:after {
+                    left: -20px;
+                    width: 6px;
+                    height: 10px;
+                    margin: -8px 0 0;
+                    -webkit-border-top-right-radius: 5px;
+                    -webkit-border-top-left-radius: 5px;
+                    -webkit-border-bottom-right-radius: 5px 10px;
+                    -webkit-border-bottom-left-radius: 5px 10px;
+                    border-radius: 5px 5px 5px 5px / 5px 5px 10px 10px;
+                }
+            }
+        }
+    }
+    .view {
+        display: -webkit-box;
+        width: 100%;
+        height: 100%;
+        padding: 0.8em;
+        background-color: #DEEBFF;
+        -webkit-box-sizing: border-box;
+        -webkit-box-orient: vertical;
+        -webkit-box-align: center;
+        -webkit-box-flex: 1;
+    }
+}

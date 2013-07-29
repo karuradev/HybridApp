@@ -1,0 +1,214 @@
+
+/*
+ * Contacts related CSS (_contacts.scss)
+ */
+
+/* --- item --- */
+
+section {
+    .wrapper {
+        .scroller {
+            ul {
+                li {
+                    .contact {
+                        &.item {
+                            display: block;
+                            padding-bottom: 5px;
+                            border-bottom: 1px solid #CCCCCC;
+                            .profile {
+                                display: -webkit-box;
+                                padding: 0.3em;
+                                -webkit-box-orient: horizontal;
+                                -webkit-box-pack: center;
+                                -webkit-box-align: center;
+                                &.active {
+                                    background-color: #99BEF2;
+                                }
+                                img.avatar {
+                                    width: 3em;
+                                    height: 3em;
+                                    display: -webkit-box;
+                                    -webkit-border-radius: 0.4em;
+                                }
+                                .full_name {
+                                    margin-left: 1em;
+                                    font-size: 1.4em;
+                                    -webkit-box-flex: 1;
+                                    @include ellipsis;
+                                }
+                            }
+                        }
+                    }
+                    &:last-child {
+                        .contact {
+                            &.item {
+                                border-bottom: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* --- detail --- */
+
+section {
+    .wrapper {
+        .scroller {
+            ul {
+                li {
+                    .contact {
+                        &.detail {
+                            display: block;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            .edit {
+                                text-align: right;
+                                width: 4em;
+                                padding: 0.2em 0.2em 0 0;
+                                margin-left: auto;
+                                &:before {
+                                    font: 1em/1.5 '#{$font_family}';
+                                    content: "w ";
+                                }
+                            }
+                            .profile {
+                                display: -webkit-box;
+                                border-top: 1px solid #6EA4E0;
+                                -webkit-box-orient: horizontal;
+                                img.avatar {
+                                    position: relative;
+                                    top: -20px;
+                                    left: 10px;
+                                    width: 80px;
+                                    height: 80px;
+                                    display: -webkit-box;
+                                    -webkit-border-radius: 0.4em;
+                                }
+                                .full_name {
+                                    margin-left: 20px;
+                                    margin-top: 10px;
+                                    font-size: 1.5em;
+                                    -webkit-box-flex: 1;
+                                    @include ellipsis;
+                                }
+                            }
+                            .details {
+                                text-indent: 20px;
+                                margin-bottom: 10px;
+                                .caption {
+                                    font-weight: bold;
+                                    color: #6EA4E0;
+                                    &.emails {
+                                        &:before {
+                                            font: 1.2em/1.5 '#{$font_family}';
+                                            content: "E";
+                                            margin-right: 0.25em;
+                                        }
+                                    }
+                                    &.phones {
+                                        &:before {
+                                            font: 1.2em/1.5 '#{$font_family}';
+                                            content: "n";
+                                            margin-right: 0.1em;
+                                        }
+                                    }
+                                    &.notes {
+                                        &:before {
+                                            font: 1.2em/1.5 '#{$font_family}';
+                                            content: "D";
+                                            margin-right: 0.25em;
+                                        }
+                                    }
+                                }
+                                .comm {
+                                    display: -webkit-box;
+                                    -webkit-box-orient: horizontal;
+                                    > span {
+                                        display: inline-block;
+                                        width: 6em;
+                                        text-align: right;
+                                        white-space: nowrap;
+                                        &:first-letter {
+                                            text-transform: uppercase;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* --- add_edit --- */
+
+section {
+    .view {
+        &.add_edit {
+            display: -webkit-box;
+            text-align: center;
+            -webkit-box-orient: vertical;
+            .title {
+                font-size: 1.5em;
+                font-weight: bold;
+                color: #0E658E;
+                text-align: center;
+                text-transform: capitalize;
+            }
+            form {
+                width: 100%;
+                fieldset {
+                    margin-top: 0.8em;
+                    text-align: left;
+                    width: 100%;
+                    > input, > textarea {
+                        width: 100%;
+                    }
+                    span {
+                        white-space: nowrap;
+                        margin: 0.3em 0;
+                        display: -webkit-box;
+                        -webkit-box-sizing: border-box;
+                        -webkit-box-pack: center;
+                        -webkit-box-align: center;
+                        > input {
+                            display: -webkit-box;
+                            -webkit-box-flex: 1;
+                        }
+                        > select {
+                            display: -webkit-box;
+                            width: 30%;
+                            margin-left: 0.5em;
+                        }
+                    }
+                    legend {
+                        font-size: 1.2em;
+                        &:first-letter {
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+                input[type=button] {
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), to(#ededed));
+                    border: 1px solid #B7B7B7;
+                    color: #606060;
+                    border-radius: 0.4em;
+                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+                    display: inline-block;
+                    font: 1.2em/100% Arial, Helvetica, sans-serif;
+                    outline: medium none;
+                    padding: 0.75em 1em;
+                    margin: 1em;
+                    text-align: center;
+                    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                    vertical-align: baseline;
+                }
+            }
+        }
+    }
+}

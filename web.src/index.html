@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<!-- 
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+ -->
+<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+@css@
+
+<script type="javascript/dependency">
+[
+	{
+		"name": "debug",
+		"path": "js/vendors/debug.js"
+	},
+	{
+		"name": "jquery",
+		"path": "js/vendors/jquery/jquery.js"
+	},
+	{ 
+		"name":	"preload_css_images_jquery_v5",
+		"path" : "js/vendors/jquery/plugins/preload_css_images.jquery_v5.js",
+		"depends" : ["jquery"]
+	},
+	{
+		"name":	"iscroll",
+		"path" : "js/vendors/iscroll/iscroll.js",
+		"depends" : ["jquery", "preload_css_images_jquery_v5"]
+	},
+	{
+		"name":	"underscore",
+		"path" : "js/vendors/underscore/underscore.js",
+		"depends" : ["jquery", "iscroll"]
+	},
+	{
+		"name":	"backbone",
+		"path" : "js/vendors/backbone/backbone.js",
+		"depends" : ["jquery", "underscore"]
+	},
+	{
+		"name": "namespace",
+		"path": "js/framework/namespace.js",
+		"depends" : ["debug", "backbone"]
+	},
+	{
+		"name": "object_map",
+		"path": "js/framework/object_map.js",
+		"depends" : ["namespace"]
+	},
+	{
+		"name": "dispatcher",
+		"path": "js/framework/dispatcher.js",
+		"depends" : ["object_map"]
+	},
+	{
+		"name" : "scripts",
+		"path" : "js/framework/scripts.js",
+		"depends" : ["namespace"]
+	},
+	{
+		"name": "karura",
+		"path": "js/framework/karura.js",
+		"depends" : ["scripts"]
+	},
+	{
+		"name": "helper",
+		"path": "js/utils/helper.js",
+		"depends" : ["namespace"]
+	},
+	{
+		"name": "browser",
+		"path": "js/utils/browser.js",
+		"depends" : ["namespace"]
+	},
+	{
+		"name": "application",
+		"path": "js/app/application.js",
+		"depends" : ["karura"]
+	},
+	{
+		"name": "about_controller",
+		"path": "js/app/controllers/about.js",
+		"depends" : ["application"]
+	},
+	{
+		"name": "contact_controller",
+		"path": "js/app/controllers/contacts.js",
+		"depends" : ["application"]
+	},
+	{
+		"name": "model_contact",
+		"path": "js/app/models/contact.js",
+		"depends" : ["contact_controller"]
+	},
+	{
+		"name": "collection_contact",
+		"path": "js/app/models/collections/contacts.js",
+		"depends" : ["model_contact"]
+	},
+	{
+		"name": "base_view",
+		"path": "js/app/views/base_view.js",
+		"depends" : ["application", "iscroll"]
+	},
+	{
+		"name": "header_view",
+		"path": "js/app/views/header_view.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "footer_view",
+		"path": "js/app/views/footer_view.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "add_edit_view",
+		"path": "js/app/views/contacts/add_edit_view.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "item_view",
+		"path": "js/app/views/contacts/item_view.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "empty_view",
+		"path": "js/app/views/empty_view.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "detail_view",
+		"path": "js/app/views/contacts/detail_view.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "list_view",
+		"path": "js/app/views/contacts/list_view.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "copyright_subview",
+		"path": "js/app/views/about/copyright_subview.js",
+		"depends" : ["base_view"]
+	},
+	{
+		"name": "title_subview",
+		"path": "js/app/views/about/title_subview.js",
+		"depends" : ["copyright_subview"]
+	},
+	{
+		"name": "index_view",
+		"path": "js/app/views/about/index_view.js",
+		"depends" : ["title_subview"]
+	}
+]
+</script>
+		
+</head>
+<body>
+
+<article>
+	<header></header>
+	<section class="loading">Loading...</section>
+	<footer></footer>
+</article>
+
+@templates@
+
+
+
+
+
+<script>
+	debug.info('[index.html] starting app...');
+
+	var karura = new exports.Karura();
+	globals.karura = karura;
+
+	karura.setDispatchHandle('window.globals.karura');
+
+	globals.app = new window.exports.app.Application.getInstance({
+		view : $('article'),
+		karura : karura
+	});
+
+	globals.app.start();
+</script>
+
+</body>
+</html>

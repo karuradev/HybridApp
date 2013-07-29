@@ -1,0 +1,58 @@
+<project name="css-lint-fragment">
+<!--
+============== GPL License ==============
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+============== Commercial License==============
+https://github.com/karuradev/licenses/blob/master/toc.txt
+-->
+    	<!-- CSSLint used for syntax checking css files -->
+
+	<property file="web.properties"/>
+	<property file="build.mode.properties"/>
+	
+	<property name="css.lint.dir" location="${web.tools.dir}/csslint" />
+	<property name="css.lint.jar" value="js-1.7R2.jar" />
+	<property name="css.lint.rhino.js" value="csslint-rhino.js" />
+	
+	<import file="net-fragment.xml"/>
+
+	<target name="setup-css-lint">
+		<mkdir dir="${css.lint.dir}" />
+
+		<download-if-needed url-to-download="http://repo2.maven.org/maven2/rhino/js/1.7R2/js-1.7R2.jar"
+		                    local-file-name="${css.lint.jar}"
+		                    local-download-dir="${css.lint.dir}" />
+
+		<download-if-needed url-to-download="https://www.assembla.com/code/skullydemo/subversion/nodes/24/trunk/labs/build/tools/csslint-rhino.js?_format=raw"
+		                    local-file-name="${css.lint.rhino.js}"
+		                    local-download-dir="${css.lint.dir}" />
+	</target>
+
+	<target name="run-css-lint">
+		<fileset id="css.fileset" dir="${css.tmp.out.dir}/">
+			<include name="**/*.css" />
+		</fileset>
+
+		<pathconvert pathsep=" " property="css.files.cmd.arg" refid="css.fileset" />
+
+		<exec executable="java">
+			<arg value="-jar" />
+			<arg value="${css.lint.dir}/${css.lint.jar}" />
+			<arg value="${css.lint.dir}/${css.lint.rhino.js}" />
+			<arg line="${css.files.cmd.arg} --warnings=box-model,floats --errors=ids,important" />
+		</exec>
+	</target>
+</project>

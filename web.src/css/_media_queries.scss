@@ -1,0 +1,52 @@
+
+/*
+ * Media Queries related CSS (_media_queries.scss)
+ */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 0.75) {
+	@viewport {
+        width: device-width;
+        zoom: 1.0;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.0) {
+	@viewport {
+        width: device-width;
+        zoom: 1.0;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+	@viewport {
+        width: device-width;
+        zoom: 1.0;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2.0) {
+	@viewport {
+        width: device-width;
+        zoom: 1.0;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3.0) {
+    @viewport {
+        width: device-width;
+        zoom: 1.0;
+    }
+}
+
+@media only screen and (orientation: portrait) {
+	@viewport {
+        width: device-width;
+    }
+}
+
+@media only screen and (orientation: landscape) {
+	@viewport {
+        width: device-width;
+        zoom: 1.0;
+    }
+}
