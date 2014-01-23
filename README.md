@@ -21,6 +21,7 @@ HybridApp
 14. `cd HybridApp`
 15. `ant debug`
 
+As you execute these commands, you will notice a lot of tools are downloaded and installed from the web which are needed for the framework to work. This includes SASS and JSLint among others. The build process takes the code from web.src folder applies these tools on the them create a post processed output in assets folder which is then deployed as part of the app.
 
 
 Intermediate Hybrid Application using Karura Framework
