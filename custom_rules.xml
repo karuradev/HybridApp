@@ -62,7 +62,7 @@ android.library.reference.1=${android.library.reference.1}
 	</target>
 
     <target name="-pre-clean">
-        <delete >
+        <delete failonerror="false">
             <fileset dir="assets/karura" includes="**/*.*"/>
         </delete>
     </target>
