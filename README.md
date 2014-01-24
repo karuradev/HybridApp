@@ -23,6 +23,30 @@ HybridApp
 
 As you execute these commands, you will notice a lot of tools are downloaded and installed from the web which are needed for the framework to work. This includes SASS and JSLint among others. The build process takes the code from web.src folder applies these tools on the them create a post processed output in assets folder which is then deployed as part of the app.
 
+Build troubleshooting
+----
+If you hit the following bug
+
+`-code-gen:
+[mergemanifest] Merging AndroidManifest files into one.
+[mergemanifest] Manifest merger disabled. Using project manifest only.
+     [echo] Handling aidl files...
+     [aidl] No AIDL files to compile.
+     [echo] ----------
+     [echo] Handling RenderScript files...
+     [echo] ----------
+     [echo] Handling Resources...
+     [aapt] Generating resource IDs...
+     [aapt] invalid resource directory name: /Users/clkim/Documents/git/HybridApp/bin/res/crunch
+
+BUILD FAILED
+/Users/clkim/dev/adt-bundle-mac-x86_64-20131030/sdk/tools/ant/build.xml:653: The following error occurred while executing this line:
+/Users/clkim/dev/adt-bundle-mac-x86_64-20131030/sdk/tools/ant/build.xml:698: null returned: 1
+`
+
+please use `ant clean` before `ant debug` 
+
+
 
 Intermediate Hybrid Application using Karura Framework
 
@@ -43,4 +67,5 @@ Intermediate Hybrid Application using Karura Framework
 
 
 Special Thanks to Heydon who let us use his excellent CSS fonts in our project, [click here to download them for free](http://www.fontsquirrel.com/foundry/Heydon-Pickering)
+
 
