@@ -40,3 +40,7 @@ Intermediate Hybrid Application using Karura Framework
 ![Info View](https://raw.github.com/karuradev/screenshots/master/hybrid_contacts/info.png)
 
 
+
+
+Special Thanks to Heydon who let us use his excellent CSS fonts in our project, [click here to download them for free](http://www.fontsquirrel.com/foundry/Heydon-Pickering)
+
