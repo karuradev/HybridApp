@@ -14,10 +14,10 @@ HybridApp
 7. `mv bsh-2.0b4.jar $ANT_HOME/lib`
 8. `wget http://www.bizdirusa.com/mirrors/apache//commons/bsf/binaries/bsf-bin-2.4.0.zip`
 9. `unzip bsf-bin-2.4.0.zip`
-10. `mv bsf-2.4.0/lib/bsf.jar ~/ant/lib/`
+10. `mv bsf-2.4.0/lib/bsf.jar $ANT_HOME/lib`
 11. `wget http://mirrors.sonic.net/apache//commons/logging/binaries/commons-logging-1.1.3-bin.zip`
 12. `unzip commons-logging-1.1.3-bin.zip`
-13. `mv commons-logging-1.1.3/*.jar ~/ant/lib/`
+13. `mv commons-logging-1.1.3/*.jar $ANT_HOME/lib`
 14. `cd HybridApp`
 15. `ant debug`
 
