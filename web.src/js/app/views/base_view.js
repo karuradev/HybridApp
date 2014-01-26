@@ -44,6 +44,7 @@
 			debug.info('[Views.BaseView] scrollView called');
 
 			var timeout;
+			var $touchable;
 			var defaults = {
 				hideScrollbar : true,
 				lockDirection : true,
@@ -56,7 +57,8 @@
 				onScrollStart : function(e) {
 					// debug.info('onScrollStart');
 					timeout = setTimeout(function() {
-						$(e.srcElement).closest('.touchable').addClass('active');
+						$touchable = $(e.srcElement).closest('.touchable');
+						$touchable.addClass('active');
 						timeout = null;
 					}, 10);
 				},
@@ -65,7 +67,7 @@
 					// debug.info('onScrollMove');
 					if (this.moved === true) {
 						if (timeout) clearTimeout(timeout);
-						$(e.srcElement).closest('.touchable').removeClass('active');
+						$touchable.removeClass('active');
 					}
 				},
 
@@ -73,7 +75,7 @@
 					// debug.info('onBeforeScrollEnd');
 					if (this.moved === false) {
 						if (timeout) clearTimeout(timeout);
-						$(e.srcElement).closest('.touchable').removeClass('active');
+						$touchable.removeClass('active');
 					}
 				},
 

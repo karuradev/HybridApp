@@ -14,7 +14,7 @@
 
 		tagName : 'div',
 
-		className : 'app_bar',
+		className : 'footer_bar',
 
 		initialize : function() {
 			this.$el.empty();

@@ -26,7 +26,7 @@
 			this.$el.empty();
 
 			this.hideFooter(false);
-			this.hideLoading(app.$section);
+			this.hideLoading(this.$layout);
 			this.listenTo(this.collection, 'reset', this.render);
 
 			this.listenTo(this.collection, 'add', function(model) {
