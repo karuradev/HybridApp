@@ -1,6 +1,9 @@
 HybridApp
 =========
 
+##Our book is available from Amazon.com.
+##http://www.amazon.com/Building-Hybrid-Android-Apps-JavaScript/dp/1449361919/
+
 ##Instructions for building Karura Framework based apps
 
 1. Install homebrew - instructions can be found [here](http://brew.sh/)
