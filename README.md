@@ -49,6 +49,7 @@ please use `ant clean` before `ant debug`
 
 
 Intermediate Hybrid Application using Karura Framework
+=========
 
 
 ![Loading View](https://raw.github.com/karuradev/screenshots/master/hybrid_contacts/loading.png)
