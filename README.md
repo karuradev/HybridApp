@@ -48,8 +48,6 @@ If you hit the following bug
 please use `ant clean` before `ant debug` 
 
 
-##Disclaimer: Our sample app is not perfect, probably we need extensive functionality test or unit test on it. However, we just wanted to show the developer community how they can glue the HTML UI to Java native.
-
 Intermediate Hybrid Application using Karura Framework
 
 
